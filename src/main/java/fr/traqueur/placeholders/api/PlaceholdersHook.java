@@ -18,10 +18,13 @@ import java.util.regex.Pattern;
 
 public class PlaceholdersHook extends PlaceholderExpansion implements Relational {
 
+
+
     private final JavaPlugin plugin;
     private final String prefix;
     private final Map<String, BiFunction<Player, List<String> ,String>> placeholders;
     private final Map<String, TriFunction<Player,Player,List<String>, String>> relationalPlaceholders;
+    private String splitter = "_";
 
     protected PlaceholdersHook(JavaPlugin plugin, String prefix) {
         this.plugin = plugin;

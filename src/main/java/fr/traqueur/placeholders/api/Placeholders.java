@@ -7,7 +7,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.List;
 import java.util.function.BiFunction;
-import java.util.stream.Collectors;
 
 public class Placeholders {
 
