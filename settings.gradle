@@ -1,2 +1,3 @@
 rootProject.name = 'PAPIWrapper'
+include 'test-plugin'
 

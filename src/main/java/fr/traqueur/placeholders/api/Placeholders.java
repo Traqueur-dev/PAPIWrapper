@@ -11,52 +11,42 @@ import java.util.stream.Collectors;
 
 public class Placeholders {
 
-    private static boolean usePAPI;
-    private static PlaceholdersManager placeholdersManager;
+    private static PlaceholdersHook placeholdersHook ;
 
     public static void load(JavaPlugin plugin) {
-        usePAPI = Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null;
-        placeholdersManager = new PlaceholdersManager(plugin.getName());
-        if(usePAPI) {
-            PlaceholdersHook placeholdersHook = new PlaceholdersHook(plugin, placeholdersManager);
-            placeholdersHook.register();
+        load(plugin, plugin.getName().toLowerCase());
+    }
+
+    public static void load(JavaPlugin plugin, String prefix) {
+        if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") == null) {
+            throw new IllegalStateException("PlaceholderAPI not found");
         }
+        placeholdersHook = new PlaceholdersHook(plugin, prefix);
+        placeholdersHook.register();
     }
 
     public static void register(String identifier, BiFunction<Player, List<String>,String> function) {
-        placeholdersManager.register(identifier, function);
+        placeholdersHook.register(identifier, function);
     }
 
     public static void register(String identifier, TriFunction<Player, Player,List<String>, String> function) {
-        placeholdersManager.register(identifier, function);
+        placeholdersHook.register(identifier, function);
     }
 
     public static String parse(Player player, String text) {
-        if(usePAPI) {
-            return PlaceholderAPI.setPlaceholders(player, text);
-        }
-        return placeholdersManager.setPlaceholders(player, text);
+        return PlaceholderAPI.setPlaceholders(player, text);
     }
 
     public static String parse(Player player, Player player2, String text) {
-        if(usePAPI) {
-            return PlaceholderAPI.setRelationalPlaceholders(player, player2, text);
-        }
-        return placeholdersManager.setRelationalPlaceholders(player, player2, text);
+        return PlaceholderAPI.setRelationalPlaceholders(player, player2, text);
     }
 
     public static List<String> parse(Player player, List<String> text) {
-        if(usePAPI) {
-            return PlaceholderAPI.setPlaceholders(player, text);
-        }
-        return text.stream().map(s -> placeholdersManager.setPlaceholders(player, s)).collect(Collectors.toList());
+        return PlaceholderAPI.setPlaceholders(player, text);
     }
 
     public static List<String> parse(Player player, Player player2, List<String> text) {
-        if(usePAPI) {
-            return PlaceholderAPI.setRelationalPlaceholders(player, player2, text);
-        }
-        return text.stream().map(s -> placeholdersManager.setRelationalPlaceholders(player, player2, s)).collect(Collectors.toList());
+        return PlaceholderAPI.setRelationalPlaceholders(player, player2, text);
     }
 
 }
