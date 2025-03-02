@@ -8,6 +8,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.List;
 import java.util.function.BiFunction;
 
+/**
+ * The placeholders class
+ */
 public class Placeholders {
 
     private static PlaceholdersHook placeholdersHook ;
