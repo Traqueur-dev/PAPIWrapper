@@ -7,6 +7,7 @@ This project is a wrapper for PlaceholderAPI that allows you to easily register 
 - Support for relational placeholders (two-player parameters).
 - Argument replacement using `{}` with a single level of recursion.
 - Easy integration with PlaceholderAPI.
+- Automatic extraction of registered placeholders into a `.md` file.
 
 ## 📥 Installation
 1. Add PlaceholderAPI as a dependency to your plugin.
@@ -50,6 +51,21 @@ public void onEnable() {
     Placeholders.load(this, "custom_prefix"); //assume placeholders are registered with the prefix "custom_prefix" like %custom_prefix_my_placeholder%
 }
 ```
+
+## 📝 Extracting Placeholders
+The `Placeholders.extract()` function allows you to automatically generate a `.md` file listing all registered placeholders with their descriptions and arguments.
+
+To include a description and potential arguments in the `.md` file, specify them when registering the placeholder:
+```java
+Placeholders.register("example", (player, args) -> {
+    return "Example value with " + args.get(0) + " and " + args.get(1);
+}, "This is an example placeholder", "arg1", "arg2"); // it's like %plugin_example_<arg1>_<arg2>%
+```
+Then call:
+```java
+Placeholders.extract();
+```
+This will generate a markdown file listing all placeholders with their descriptions and expected arguments.
 
 ## 📄 License
 This project is licensed under the MIT License.

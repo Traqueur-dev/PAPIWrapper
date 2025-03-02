@@ -14,7 +14,7 @@ public final class TestPlugin extends JavaPlugin {
             } else {
                 return "§aTest: §7" + args.getFirst();
             }
-        });
+        }, "Default exemple placeholder", "test");
         Placeholders.register("test", (player, player1, args) -> {
             if(args.isEmpty()) {
                 return "§cErreur: §7Aucun argument spécifié.";
@@ -22,6 +22,8 @@ public final class TestPlugin extends JavaPlugin {
                 return "§aTest: §7" + args.getFirst();
             }
         });
+
+        Placeholders.extract();
     }
 
     @Override
