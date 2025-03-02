@@ -16,16 +16,21 @@ import java.util.function.BiFunction;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * This class is a placeholder hook for PlaceholderAPI.
+ */
 public class PlaceholdersHook extends PlaceholderExpansion implements Relational {
-
-
 
     private final JavaPlugin plugin;
     private final String prefix;
     private final Map<String, BiFunction<Player, List<String> ,String>> placeholders;
     private final Map<String, TriFunction<Player,Player,List<String>, String>> relationalPlaceholders;
-    private String splitter = "_";
 
+    /**
+     * Create a new placeholder hook.
+     * @param plugin The plugin.
+     * @param prefix The placeholder prefix.
+     */
     protected PlaceholdersHook(JavaPlugin plugin, String prefix) {
         this.plugin = plugin;
         this.prefix = prefix;
@@ -33,24 +38,42 @@ public class PlaceholdersHook extends PlaceholderExpansion implements Relational
         relationalPlaceholders = new HashMap<>();
     }
 
+    /**
+     * Return the placeholder identifier.
+     * @return The placeholder identifier.
+     */
     @NotNull
     @Override
     public String getIdentifier() {
         return this.prefix;
     }
 
+    /**
+     * Return the plugin author.
+     * @return The plugin author.
+     */
     @NotNull
     @Override
     public String getAuthor() {
         return plugin.getDescription().getAuthors().get(0);
     }
 
+    /**
+     * Return the plugin version.
+     * @return The plugin version.
+     */
     @NotNull
     @Override
     public String getVersion() {
         return plugin.getDescription().getVersion();
     }
 
+    /**
+     * Return the parsed value of the placeholder.
+     * @param player The player.
+     * @param params The parameters of the placeholder.
+     * @return the parsed value of the placeholder.
+     */
     @Nullable
     @Override
     public String onPlaceholderRequest(Player player, @NotNull String params) {
@@ -63,6 +86,13 @@ public class PlaceholdersHook extends PlaceholderExpansion implements Relational
         return "Error";
     }
 
+    /**
+     * Return the parsed value of the relational placeholder.
+     * @param player The player.
+     * @param player1 The second player.
+     * @param params The parameters of the placeholder.
+     * @return the parsed value of the relational placeholder.
+     */
     @Override
     public String onPlaceholderRequest(Player player, Player player1, String params) {
         for (Map.Entry<String, TriFunction<Player, Player, List<String>, String>> stringBiFunctionEntry : this.relationalPlaceholders.entrySet()) {
@@ -74,14 +104,32 @@ public class PlaceholdersHook extends PlaceholderExpansion implements Relational
         return "Error";
     }
 
+    /**
+     * Register a placeholder with a function that takes a player and a list of parameters.
+     * @param identifier The placeholder identifier.
+     * @param function The function that takes a player and a list of parameters.
+     */
     protected void register(String identifier, BiFunction<Player, List<String> ,String> function) {
         this.placeholders.put(identifier, function);
     }
 
+    /**
+     * Register a relational placeholder with a function that takes two players and a list of parameters.
+     * @param identifier The placeholder identifier.
+     * @param function The function that takes two players and a list of parameters.
+     */
     protected void register(String identifier, TriFunction<Player, Player,List<String>, String> function) {
         this.relationalPlaceholders.put(identifier, function);
     }
 
+    /**
+     * Extract the parameters from the placeholder string.
+     * @param player The player.
+     * @param player2 The second player.
+     * @param params The placeholder string.
+     * @param key The placeholder key.
+     * @return The list of parameters.
+     */
     private List<String> extractParams(Player player, Player player2, String params, String key) {
         String internalParams = params.replaceFirst(key + "_?", "");
         List<String> list = new ArrayList<>();
