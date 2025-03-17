@@ -106,6 +106,7 @@ public class Placeholders {
         Placeholders.plugin = plugin;
         placeholdersHook = new PlaceholdersHook(plugin, prefix);
         placeholdersHook.register();
+        Updater.checkUpdates();
     }
 
     /**

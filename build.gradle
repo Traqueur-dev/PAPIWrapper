@@ -37,7 +37,8 @@ java {
 
 tasks.register('generateVersionProperties') {
     doLast {
-        def file = new File("$projectDir/src/main/resources/version.properties")
+        def name = project.name.toLowerCase()
+        def file = new File("$projectDir/src/main/resources/"+name+".properties")
         if (!file.parentFile.exists()) {
             file.parentFile.mkdirs()
         }
